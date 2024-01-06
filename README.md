@@ -32,9 +32,9 @@ curl -sSf https://static.rust-lang.org/rustup.sh | sh
 
 - [x] Models
 - [ ] Audit
-  - [ ]   GET /audit-applications
-  - [ ]   GET /audit-applications/{auditApplicationId}
-  - [ ]   PUT /audit-applications/{auditApplicationId}
+  - [x]   GET /audit-applications
+  - [x]   GET /audit-applications/{auditApplicationId}
+  - [x]   PUT /audit-applications/{auditApplicationId}
   - [ ]   GET /audit-applications/{auditApplicationId}/audit-entries
   - [ ] DELETE /audit-applications/{auditApplicationId}/audit-entries
   - [ ]   GET /audit-applications/{auditApplicationId}/audit-entries/{auditEntryId}
