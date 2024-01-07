@@ -30,6 +30,7 @@ curl -sSf https://static.rust-lang.org/rustup.sh | sh
 
 ### [Core API](https://api-explorer.alfresco.com/api-explorer/?urls.primaryName=Core%20API)
 
+- [ ] **TODO: Proper status code handling**
 - [x] Models
 - [x] Audit
   - [x]   GET /audit-applications
