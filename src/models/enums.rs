@@ -1,9 +1,9 @@
 use std::fmt;
 use std::fmt::Formatter;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use crate::models::structs::ValidTicketEntry;
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum VisibilityEnum {
     PUBLIC,
     PRIVATE,
@@ -20,7 +20,7 @@ impl fmt::Display for VisibilityEnum {
     }
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum RoleEnum {
     SiteConsumer,
     SiteCollaborator,
@@ -39,7 +39,7 @@ impl fmt::Display for RoleEnum {
     }
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum MemberTypeEnum {
     GROUP,
     PERSON,
@@ -54,7 +54,7 @@ impl fmt::Display for MemberTypeEnum {
     }
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum SubscriptionLevelEnum {
     Free,
     Standard,
@@ -71,7 +71,7 @@ impl fmt::Display for SubscriptionLevelEnum {
     }
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum RatingIdEnum {
     Likes,
     FiveStar,
@@ -86,7 +86,7 @@ impl fmt::Display for RatingIdEnum {
     }
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(untagged)]
 pub enum RatingValueEnum {
     Bool(bool),
@@ -102,7 +102,7 @@ impl fmt::Display for RatingValueEnum {
     }
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum AccessStatusEnum {
     ALLOWED,
     DENIED,
@@ -117,7 +117,7 @@ impl fmt::Display for AccessStatusEnum {
     }
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum NodeBodyLockTypeEnum {
     #[serde(rename = "ALLOW_OWNER_CHANGES")]
     AllowOwnerChanges,
@@ -133,7 +133,7 @@ impl fmt::Display for NodeBodyLockTypeEnum {
     }
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum NodeBodyLockLifetimeEnum {
     PERSISTENT,
     EPHEMERAL,
@@ -148,7 +148,7 @@ impl fmt::Display for NodeBodyLockLifetimeEnum {
     }
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum RenditionStatusEnum {
     CREATED,
     #[serde(rename = "NOT_CREATED")]
@@ -164,7 +164,7 @@ impl fmt::Display for RenditionStatusEnum {
     }
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum DownloadStatusEnum {
     PENDING,
     CANCELLED,

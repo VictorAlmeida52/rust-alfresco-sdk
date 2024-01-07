@@ -31,15 +31,15 @@ curl -sSf https://static.rust-lang.org/rustup.sh | sh
 ### [Core API](https://api-explorer.alfresco.com/api-explorer/?urls.primaryName=Core%20API)
 
 - [x] Models
-- [ ] Audit
+- [x] Audit
   - [x]   GET /audit-applications
   - [x]   GET /audit-applications/{auditApplicationId}
   - [x]   PUT /audit-applications/{auditApplicationId}
-  - [ ]   GET /audit-applications/{auditApplicationId}/audit-entries
-  - [ ] DELETE /audit-applications/{auditApplicationId}/audit-entries
-  - [ ]   GET /audit-applications/{auditApplicationId}/audit-entries/{auditEntryId}
-  - [ ] DELETE /audit-applications/{auditApplicationId}/audit-entries/{auditEntryId}
-  - [ ]   GET /nodes/{nodeId}/audit-entries
+  - [x]   GET /audit-applications/{auditApplicationId}/audit-entries
+  - [x] DELETE /audit-applications/{auditApplicationId}/audit-entries
+  - [x]   GET /audit-applications/{auditApplicationId}/audit-entries/{auditEntryId}
+  - [x] DELETE /audit-applications/{auditApplicationId}/audit-entries/{auditEntryId}
+  - [x]   GET /nodes/{nodeId}/audit-entries
 - [ ] Actions
   - [ ]   GET /nodes/{nodeId}/action-definitions
   - [ ]   GET /action-definitions

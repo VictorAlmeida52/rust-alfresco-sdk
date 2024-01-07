@@ -4,24 +4,24 @@ use crate::models::enums::{AccessStatusEnum, DownloadStatusEnum, MemberTypeEnum,
 
 type AnyObj = serde_json::Value;
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AlfError {
     pub error: AlfErrorProps
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AlfErrorProps {
     pub error_key: Option<String>,
-    pub status_code: u32,
+    pub status_code: u16,
     pub brief_summary: String,
     pub stack_trace: String,
     pub description_url: String,
     pub log_id: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Capabilities {
     pub is_admin: bool,
@@ -29,7 +29,7 @@ pub struct Capabilities {
     pub is_mutable: bool,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Pagination {
     pub count: u64,
@@ -39,7 +39,7 @@ pub struct Pagination {
     pub max_items: u64,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteBodyCreate {
     pub id: Option<String>,
@@ -48,26 +48,26 @@ pub struct SiteBodyCreate {
     pub visibility: VisibilityEnum,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SitePaging {
     pub list: SitePagingList
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SitePagingList {
     pub pagination: Pagination,
     pub entries: Vec<SiteEntry>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteEntry {
     pub entry: Site
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Site {
     pub id: String,
@@ -79,7 +79,7 @@ pub struct Site {
     pub role: Option<RoleEnum>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteBodyUpdate {
     pub title: String,
@@ -87,65 +87,65 @@ pub struct SiteBodyUpdate {
     pub visibility: VisibilityEnum,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteContainerPaging {
     pub list: SiteContainerPagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteContainerPagingList {
     pub pagination: Pagination,
     pub entries: Vec<SiteContainerEntry>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteContainerEntry {
     pub entry: SiteContainer,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteContainer {
     pub id: String,
     pub folder_id: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMembershipBodyCreate {
     pub role: RoleEnum,
     pub id: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMembershipBodyUpdate {
     pub role: RoleEnum,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMemberPaging {
     pub list: SiteMemberPagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMemberPagingList {
     pub pagination: Pagination,
     pub entries: Vec<SiteMemberEntry>
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMemberEntry {
     pub entry: SiteMember,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMember {
     pub id: String,
@@ -154,7 +154,7 @@ pub struct SiteMember {
     pub is_member_of_group: Option<bool>
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Person {
     pub id: String,
@@ -181,7 +181,7 @@ pub struct Person {
     pub capabilities: Option<Capabilities>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Company {
     pub organization: Option<String>,
@@ -194,26 +194,26 @@ pub struct Company {
     pub email: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteGroupPaging {
     pub list: SiteGroupPagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteGroupPagingList {
     pub pagination: Pagination,
     pub entries: Vec<SiteGroupEntry>
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteGroupEntry {
     pub entry: SiteGroup,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteGroup {
     pub id: String,
@@ -221,7 +221,7 @@ pub struct SiteGroup {
     pub role: RoleEnum,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GroupMember {
     pub id: String,
@@ -229,26 +229,26 @@ pub struct GroupMember {
     pub member_type: MemberTypeEnum,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteRolePaging {
     pub list: SiteRolePagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteRolePagingList {
     pub pagination: Pagination,
     pub entries: Vec<SiteRoleEntry>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteRoleEntry {
     pub entry: SiteRole,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteRole {
     pub site: Site,
@@ -257,7 +257,7 @@ pub struct SiteRole {
     pub role: RoleEnum,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PersonBodyCreate {
     pub id: String,
@@ -281,7 +281,7 @@ pub struct PersonBodyCreate {
     pub properties: Option<AnyObj>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PersonBodyUpdate {
     pub id: Option<String>,
@@ -305,45 +305,45 @@ pub struct PersonBodyUpdate {
     pub properties: Option<AnyObj>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PersonPaging {
     pub list: PersonPagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PersonPagingList {
     pub pagination: Pagination,
     pub entries: PersonEntry,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PersonEntry {
     pub entry: Person,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GroupPaging {
     pub list: GroupPagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GroupPagingList {
     pub pagination: Pagination,
     pub entries: GroupEntry,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GroupEntry {
     pub entry: Group,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Group {
     pub id: String,
@@ -353,33 +353,33 @@ pub struct Group {
     pub zones: Vec<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GroupMemberPaging {
     pub list: GroupMemberPagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GroupMemberPagingList {
     pub pagination: Pagination,
     pub entries: Vec<GroupMemberEntry>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GroupMemberEntry {
     pub entry: GroupMember,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GroupMembershipBodyCreate {
     pub id: String,
     pub member_type: MemberTypeEnum,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GroupBodyCreate {
     pub id: String,
@@ -387,38 +387,38 @@ pub struct GroupBodyCreate {
     pub parent_ids: Option<Vec<String>>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GroupBodyUpdate {
     pub display_name: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CommentBody {
     pub content: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CommentPaging {
     pub list: CommentPagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CommentPagingList {
     pub pagination: Pagination,
     pub entries: CommentEntry,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CommentEntry {
     pub entry: Comment,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Comment {
     pub id: String,
@@ -433,32 +433,32 @@ pub struct Comment {
     pub can_delete: bool,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct TagBody {
     pub tag: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct TagPaging {
     pub list: TagPagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct TagPagingList {
     pub pagination: Pagination,
     pub entries: Vec<TagEntry>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct TagEntry {
     pub entry: Tag
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Tag {
     pub id: String,
@@ -466,26 +466,26 @@ pub struct Tag {
     pub count: Option<u64>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PersonNetworkPaging {
     pub list: PersonNetworkPagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PersonNetworkPagingList {
     pub pagination: Pagination,
     pub entries: Vec<PersonNetworkEntry>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PersonNetworkEntry {
     pub entry: PersonNetwork,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PersonNetwork {
     pub id: String,
@@ -497,7 +497,7 @@ pub struct PersonNetwork {
     pub quotas: Vec<NetworkQuota>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkQuota {
     pub id: String,
@@ -506,33 +506,33 @@ pub struct NetworkQuota {
 }
 
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RatingBody {
     pub id: RatingIdEnum,
     pub my_rating: RatingValueEnum,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RatingPaging {
     pub list: RatingPagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RatingPagingList {
     pub pagination: Pagination,
     pub entries: Vec<RatingEntry>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RatingEntry {
     pub entry: Rating,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Rating {
     pub id: String,
@@ -541,39 +541,39 @@ pub struct Rating {
     pub my_rating: Option<RatingValueEnum>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RatingAggregate {
     pub number_of_ratings: u64,
     pub average: Option<u64>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FavoriteBodyCreate {
     pub target: AnyObj,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FavoritePaging {
     pub list: FavoritePagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FavoritePagingList {
     pub pagination: Pagination,
     pub entries: Vec<FavoriteEntry>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FavoriteEntry {
     pub entry: Favorite,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Favorite {
     pub target_guid: String,
@@ -582,44 +582,44 @@ pub struct Favorite {
     pub properties: Option<AnyObj>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FavoriteSiteBodyCreate {
     pub id: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FavoriteSiteEntry {
     pub entry: FavoriteSite,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FavoriteSite {
     pub id: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ActivityPaging {
     pub list: ActivityPagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ActivityPagingList {
     pub pagination: Pagination,
     pub entries: ActivityEntry,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ActivityEntry {
     pub entry: Activity,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Activity {
     pub post_person_id: String,
@@ -631,33 +631,33 @@ pub struct Activity {
     pub activity_type: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PreferencePaging {
     pub list: PreferencePagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PreferencePagingList {
     pub pagination: Pagination,
     pub entries: PreferenceEntry,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PreferenceEntry {
     pub entry: Preference,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Preference {
     pub id: String,
     pub value: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMembershipRequestBodyCreate {
     pub message: Option<String>,
@@ -666,32 +666,32 @@ pub struct SiteMembershipRequestBodyCreate {
     pub client: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMembershipRequestBodyUpdate {
     pub message: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMembershipRequestPaging {
     pub list: SiteMembershipRequestPagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMembershipRequestPagingList {
     pub pagination: Pagination,
     pub entries: Vec<SiteMembershipRequestEntry>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMembershipRequestEntry {
     pub entry: SiteMembershipRequest,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMembershipRequest {
     pub id: String,
@@ -700,26 +700,26 @@ pub struct SiteMembershipRequest {
     pub message: Option<String>
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMembershipRequestWithPersonPaging {
     pub list: SiteMembershipRequestWithPersonPagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMembershipRequestWithPersonPagingList {
     pub pagination: Pagination,
     pub entries: Vec<SiteMembershipRequestWithPersonEntry>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMembershipRequestWithPersonEntry {
     pub entry: SiteMembershipRequestWithPerson,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMembershipRequestWithPerson {
     pub id: String,
@@ -729,26 +729,26 @@ pub struct SiteMembershipRequestWithPerson {
     pub message: Option<String>
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMembershipApprovalBody {
     pub role: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteMembershipRejectionBody {
     pub comment: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UserInfo {
     pub display_name: String,
     pub id: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ContentInfo {
     pub mime_type: String,
@@ -757,34 +757,34 @@ pub struct ContentInfo {
     pub encoding: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AssociationInfo {
     pub assoc_type: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AssociationBody {
     pub target_id: String,
     pub assoc_type: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ChildAssociationInfo {
     pub assoc_type: String,
     pub is_primary: bool,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ChildAssociationBody {
     pub child_id: String,
     pub assoc_type: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PathElement {
     pub id: Option<String>,
@@ -793,7 +793,7 @@ pub struct PathElement {
     pub aspect_names: Option<Vec<String>>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PathInfo {
     pub elements: Option<PathElement>,
@@ -801,7 +801,7 @@ pub struct PathInfo {
     pub is_complete: Option<bool>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PermissionElement {
     pub authority_id: Option<String>,
@@ -809,7 +809,7 @@ pub struct PermissionElement {
     pub access_status: Option<AccessStatusEnum>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PermissionsInfo {
     pub is_inheritance_enabled: Option<bool>,
@@ -818,20 +818,20 @@ pub struct PermissionsInfo {
     pub settable: Option<Vec<String>>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PermissionsBody {
     pub is_inheritance_enabled: Option<bool>,
     pub locally_set: Option<Vec<PermissionElement>>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct BaseAssociation {
     pub assoc_type: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeBodyCreate {
     pub name: String,
@@ -846,13 +846,13 @@ pub struct NodeBodyCreate {
     pub targets: Option<Vec<AssociationBody>>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Definition {
     pub properties: Vec<Property>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Property {
     pub id: String,
@@ -868,7 +868,7 @@ pub struct Property {
 }
 
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Constraint {
     pub id: String,
@@ -879,7 +879,7 @@ pub struct Constraint {
     pub parameters: Option<HashMap<String, AnyObj>>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeBodyUpdate {
     pub name: Option<String>,
@@ -889,21 +889,21 @@ pub struct NodeBodyUpdate {
     pub permissions: Option<PermissionsBody>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeBodyCopy {
     pub target_parent_id: String,
     pub name: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeBodyMove {
     pub target_parent_id: String,
     pub name: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeBodyLock {
     pub time_to_expire: Option<u64>,
@@ -912,7 +912,7 @@ pub struct NodeBodyLock {
     pub lifetime: Option<NodeBodyLockLifetimeEnum>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Node {
     pub id: String,
@@ -937,19 +937,19 @@ pub struct Node {
     pub definition: Option<Definition>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeEntry {
     pub entry: Node,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodePaging {
     pub list: Option<NodePagingList>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodePagingList {
     pub pagination: Option<Pagination>,
@@ -957,13 +957,13 @@ pub struct NodePagingList {
     pub source: Option<Node>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeAssociationPaging {
     pub list: Option<NodeAssociationPagingList>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeAssociationPagingList {
     pub pagination: Option<Pagination>,
@@ -971,13 +971,13 @@ pub struct NodeAssociationPagingList {
     pub source: Option<Node>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeChildAssociationPaging {
     pub list: Option<NodeChildAssociationPagingList>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeChildAssociationPagingList {
     pub pagination: Option<Pagination>,
@@ -985,13 +985,13 @@ pub struct NodeChildAssociationPagingList {
     pub source: Option<Node>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeAssociationEntry {
     pub entry: NodeAssociation,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeAssociation {
     pub id: String,
@@ -1017,13 +1017,13 @@ pub struct NodeAssociation {
     pub association: Option<AssociationInfo>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeChildAssociationEntry {
     pub entry: NodeChildAssociation,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeChildAssociation {
     pub id: String,
@@ -1049,59 +1049,59 @@ pub struct NodeChildAssociation {
     pub association: Option<ChildAssociationInfo>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AssociationEntry {
     pub entry: Association,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Association {
     pub target_id: String,
     pub assoc_type: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ChildAssociationEntry {
     pub entry: ChildAssociation,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ChildAssociation {
     pub child_id: String,
     pub assoc_type: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ProbeEntry {
     pub entry: Probe,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Probe {
     pub message: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DirectAccessUrlBodyCreate {
     pub expires_at: Option<String>, // date-time
     pub valid_for: Option<u64>, // Length of time in seconds that the url is valid for.
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SharedLinkBodyCreate {
     pub node_id: String,
     pub expired_at: Option<String>, // date-time
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SharedLinkBodyEmail {
     pub client: Option<String>,
@@ -1110,26 +1110,26 @@ pub struct SharedLinkBodyEmail {
     pub recipient_emails: Option<Vec<String>>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SharedLinkPaging {
     pub list: SharedLinkPagingList,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SharedLinkPagingList {
     pub pagination: Pagination,
     pub entries: Vec<SharedLinkEntry>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SharedLinkEntry {
     pub entry: SharedLink
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SharedLink {
     pub id: Option<String>,
@@ -1150,19 +1150,19 @@ pub struct SharedLink {
     pub path: Option<PathInfo>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RenditionBodyCreate {
     pub id: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RenditionEntry {
     pub entry: Rendition,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Rendition {
     pub id: Option<String>,
@@ -1170,39 +1170,39 @@ pub struct Rendition {
     pub status: Option<RenditionStatusEnum>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RenditionPaging {
     pub list: Option<RenditionPagingList>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RenditionPagingList {
     pub pagination: Option<Pagination>,
     pub entries: Option<Vec<RenditionEntry>>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DeletedNodesPaging {
     pub list: Option<DeletedNodesPagingList>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DeletedNodesPagingList {
     pub pagination: Option<Pagination>,
     pub entries: Option<Vec<DeletedNodeEntry>>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DeletedNodeEntry {
     pub entry: DeletedNode,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DeletedNode {
     pub id: String,
@@ -1229,40 +1229,40 @@ pub struct DeletedNode {
     pub archived_at: String, // date-time
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DeletedNodeRestore {
     pub target_parent_id: Option<String>,
     pub assoc_type: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RevertBody {
     pub major_version: Option<bool>,
     pub comment: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct VersionPaging {
     pub list: Option<VersionPagingList>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct VersionPagingList {
     pub pagination: Option<Pagination>,
     pub entries: Option<Vec<VersionEntry>>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct VersionEntry {
     pub entry: Option<Version>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Version {
     pub id: String,
@@ -1278,19 +1278,19 @@ pub struct Version {
     pub properties: Option<AnyObj>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DownloadBodyCreate {
     pub node_ids: Vec<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DownloadEntry {
     pub entry: Download,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Download {
     pub filed_added: Option<u64>,
@@ -1301,13 +1301,13 @@ pub struct Download {
     pub status: Option<DownloadStatusEnum>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ClientBody {
     pub client: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PasswordResetBody {
     pub password: String,
@@ -1315,26 +1315,26 @@ pub struct PasswordResetBody {
     pub key: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AuditAppPaging {
     pub list: Option<AuditAppPagingList>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AuditAppPagingList {
     pub pagination: Option<Pagination>,
     pub entries: Option<Vec<AuditAppEntry>>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AuditAppEntry {
     pub entry: AuditApp,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AuditApp {
     pub id: String,
@@ -1344,32 +1344,32 @@ pub struct AuditApp {
     pub min_entry_id: Option<u64>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AuditBodyUpdate {
     pub is_enabled: Option<bool>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AuditEntryPaging {
     pub list: Option<AuditEntryPagingList>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AuditEntryPagingList {
     pub pagination: Option<Pagination>,
     pub entries: Option<Vec<AuditEntryEntry>>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AuditEntryEntry {
     pub entry: AuditEntry,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AuditEntry {
     pub id: String,
@@ -1379,26 +1379,26 @@ pub struct AuditEntry {
     pub values: Option<AnyObj>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ActionDefinitionList {
     pub list: Option<ActionDefinitionListList>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ActionDefinitionListList {
     pub pagination: Option<Pagination>,
     pub entries: Option<Vec<ActionDefinition>>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ActionDefinitionEntry {
     pub entry: ActionDefinition,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ActionDefinition {
     pub id: String,
@@ -1411,7 +1411,7 @@ pub struct ActionDefinition {
 }
 
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ActionParameterDefinition {
     pub name: Option<String>,
@@ -1422,7 +1422,7 @@ pub struct ActionParameterDefinition {
     pub display_label: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ActionBodyExec {
     pub action_definition_id: String,
@@ -1430,46 +1430,46 @@ pub struct ActionBodyExec {
     pub params: Option<AnyObj>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ActionExecResultEntry {
     pub entry: ActionExecResult,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ActionExecResult {
     pub id: String,
 }
 
 // Authentication API
-#[derive(Debug, Serialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct TicketBodyCreate {
     pub user_id: Option<String>,
     pub password: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct TicketEntry {
     pub entry: Ticket,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Ticket {
     pub id: Option<String>,
     pub user_id: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ValidTicketEntry {
     pub entry: ValidTicket,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ValidTicket {
     pub id: Option<String>,
