@@ -1504,5 +1504,3 @@ pub struct ValidTicket {
 
 
 
-
-

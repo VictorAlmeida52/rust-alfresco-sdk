@@ -1,73 +1,14 @@
 use reqwest::Client;
 use base64::{Engine as _, engine::general_purpose};
-use serde::Serialize;
 use serde_json::json;
-use crate::models::structs::{AlfError, AuditApp, AuditAppPagingList, AuditEntryEntry, AuditEntryPaging};
+use crate::models::structs::{AuditApp, AuditAppPagingList, AuditEntryEntry, AuditEntryPaging};
 
 use anyhow::Result;
+use crate::alfresco::params::QueryParamsBuilder;
 
 pub struct AuditApi {
     pub base_url: String,
     pub client: Client,
-}
-
-#[derive(Serialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-struct ListAuditApplicationsQueryParams {
-    skip_count: u32,
-    max_items: u32,
-    fields: Option<Vec<String>>,
-}
-
-#[derive(Serialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-struct GetAuditApplicationInfoQueryParams {
-    fields: Option<Vec<String>>,
-    include: Option<Vec<String>>,
-}
-
-#[derive(Serialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-struct UpdateAuditApplicationInfoQueryParams {
-    fields: Option<Vec<String>>,
-}
-
-#[derive(Serialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-struct ListAuditEntriesForAuditAppQueryParams {
-    skip_count: u32,
-    omit_total_items: bool,
-    order_by: Option<Vec<String>>,
-    max_items: u32,
-    #[serde(alias = "where")]
-    where_filter: Option<String>,
-    include: Option<Vec<String>>,
-    fields: Option<Vec<String>>,
-}
-
-#[derive(Serialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-struct DeleteAuditEntriesForAuditAppQueryParams {
-    #[serde(alias = "where")]
-    where_filter: String,
-}
-
-#[derive(Serialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-struct GetAuditEntryQueryParams {
-    fields: Option<Vec<String>>,
-}
-
-#[derive(Serialize, Debug, Clone)]
-#[serde(rename_all = "camelCase")]
-struct ListAuditEntriesForNodeQueryParams {
-    skip_count: u32,
-    order_by: Option<Vec<String>>,
-    max_items: u32,
-    #[serde(alias = "where")]
-    where_filter: Option<String>,
-    include: Option<Vec<String>>,
-    fields: Option<Vec<String>>,
 }
 
 impl AuditApi {
@@ -78,25 +19,24 @@ impl AuditApi {
         }
     }
 
-    pub async fn list_audit_applications(
-        &self,
-        ticket: &str,
-        skip_count: Option<u32>,
-        max_items: Option<u32>,
-        fields: Option<Vec<String>>
-    ) -> Result<AuditAppPagingList, AlfError> {
+    pub async fn list_audit_applications(&self, ticket: &str, skip_count: Option<&u32>, max_items: Option<&u32>, fields: Option<&Vec<String>>) -> Result<AuditAppPagingList> {
         let formatted_url = format!("{}/audit-applications", self.base_url);
         let ticket_b64 = general_purpose::STANDARD.encode(ticket);
 
-        let params = ListAuditApplicationsQueryParams {
-            skip_count: skip_count.unwrap_or(0),
-            max_items: max_items.unwrap_or(100),
-            fields,
-        };
+        let mut params_builder = QueryParamsBuilder::new()
+            .set_skip_count(skip_count)
+            .set_max_items(max_items);
+
+        if let Some(field_list) = fields {
+            for field in field_list {
+                params_builder.push_field(Some(field));
+            }
+        }
+
 
         let raw_response = self.client.get(&formatted_url)
             .header("Authorization", format!("Basic {}", ticket_b64))
-            .query(&params)
+            .query(&params_builder.build())
             .send()
             .await?;
 
@@ -105,24 +45,27 @@ impl AuditApi {
         Ok(parsed)
     }
 
-    pub async fn get_audit_application_info(
-        &self,
-        ticket: &str,
-        audit_application_id: &str,
-        fields: Option<Vec<String>>,
-        include: Option<Vec<String>>,
-    ) -> Result<AuditApp, AlfError> {
+    pub async fn get_audit_application_info(&self, ticket: &str, audit_application_id: &str, fields: Option<&Vec<String>>, include: Option<&Vec<String>>) -> Result<AuditApp> {
         let formatted_url = format!("{}/audit-applications/{}", self.base_url, audit_application_id);
         let ticket_b64 = general_purpose::STANDARD.encode(ticket);
 
-        let params = GetAuditApplicationInfoQueryParams {
-            fields,
-            include,
-        };
+        let mut params_builder = QueryParamsBuilder::new();
+
+        if let Some(field_list) = fields {
+            for field in field_list {
+                params_builder.push_field(Some(field));
+            }
+        }
+
+        if let Some(include_list) = include {
+            for include_value in include_list {
+                params_builder.push_field(Some(include_value));
+            }
+        }
 
         let raw_response = self.client.get(&formatted_url)
             .header("Authorization", format!("Basic {}", ticket_b64))
-            .query(&params)
+            .query(&params_builder.build())
             .send()
             .await?;
 
@@ -131,19 +74,17 @@ impl AuditApi {
         Ok(parsed)
     }
 
-    pub async fn update_audit_application_info(
-        &self,
-        ticket: &str,
-        audit_application_id: &str,
-        fields: Option<Vec<String>>,
-        is_enabled: &bool,
-    ) -> Result<AuditApp, AlfError> {
+    pub async fn update_audit_application_info(&self, ticket: &str, audit_application_id: &str, fields: Option<&Vec<String>>, is_enabled: &bool) -> Result<AuditApp> {
         let formatted_url = format!("{}/audit-applications/{}", self.base_url, audit_application_id);
         let ticket_b64 = general_purpose::STANDARD.encode(ticket);
 
-        let params = UpdateAuditApplicationInfoQueryParams {
-            fields,
-        };
+        let mut params_builder = QueryParamsBuilder::new();
+
+        if let Some(field_list) = fields {
+            for field in field_list {
+                params_builder.push_field(Some(field));
+            }
+        }
 
         let body = json!({
             "isEnabled": &is_enabled,
@@ -151,7 +92,7 @@ impl AuditApi {
 
         let raw_response = self.client.put(&formatted_url)
             .header("Authorization", format!("Basic {}", ticket_b64))
-            .query(&params)
+            .query(&params_builder.build())
             .json(&body)
             .send()
             .await?;
@@ -161,35 +102,37 @@ impl AuditApi {
         Ok(parsed)
     }
 
-    pub async fn list_audit_entries_for_audit_app(
-        &self,
-        ticket: &str,
-        audit_application_id: &str,
-        skip_count: Option<u32>,
-        omit_total_items: Option<bool>,
-        order_by: Option<Vec<String>>,
-        max_items: Option<u32>,
-        where_filter: Option<String>,
-        include: Option<Vec<String>>,
-        fields: Option<Vec<String>>,
-    ) -> Result<AuditEntryPaging, AlfError> {
+    pub async fn list_audit_entries_for_audit_app(&self, ticket: &str,audit_application_id: &str, skip_count: Option<&u32>, omit_total_items: Option<&bool>, order_by: Option<&Vec<String>>, max_items: Option<&u32>, where_filter: Option<&String>, include: Option<&Vec<String>>, fields: Option<&Vec<String>>) -> Result<AuditEntryPaging> {
         let formatted_url = format!("{}/audit-applications/{}/audit-entries", self.base_url, audit_application_id);
         let ticket_b64 = general_purpose::STANDARD.encode(ticket);
 
-        let params = ListAuditEntriesForAuditAppQueryParams {
-            skip_count: skip_count.unwrap_or(0),
-            omit_total_items: omit_total_items.unwrap_or(false),
-            order_by,
-            max_items: max_items.unwrap_or(100),
-            where_filter,
-            include,
-            fields,
-        };
+        let mut params_builder = QueryParamsBuilder::new()
+            .set_skip_count(skip_count)
+            .set_omit_total_items(omit_total_items)
+            .set_max_items(max_items)
+            .set_where_filter(where_filter);
 
+        if let Some(order_list) = order_by {
+            for order_value in order_list {
+                params_builder.push_order_by(Some(order_value));
+            }
+        }
+
+        if let Some(field_list) = fields {
+            for field in field_list {
+                params_builder.push_field(Some(field));
+            }
+        }
+
+        if let Some(include_list) = include {
+            for include_value in include_list {
+                params_builder.push_include(Some(include_value));
+            }
+        }
 
         let raw_response = self.client.get(&formatted_url)
             .header("Authorization", format!("Basic {}", ticket_b64))
-            .query(&params)
+            .query(&params_builder.build())
             .send()
             .await?;
 
@@ -198,22 +141,16 @@ impl AuditApi {
         Ok(parsed)
     }
 
-    pub async fn delete_audit_entries_for_audit_app(
-        &self,
-        ticket: &str,
-        audit_application_id: &str,
-        where_filter: String,
-    ) -> Result<AuditEntryPaging, AlfError> {
+    pub async fn permanently_delete_audit_entries_for_audit_app(&self, ticket: &str, audit_application_id: &str, where_filter: &String, ) -> Result<AuditEntryPaging> {
         let formatted_url = format!("{}/audit-applications/{}/audit-entries", self.base_url, audit_application_id);
         let ticket_b64 = general_purpose::STANDARD.encode(ticket);
 
-        let params = DeleteAuditEntriesForAuditAppQueryParams {
-            where_filter,
-        };
+        let mut params_builder = QueryParamsBuilder::new()
+            .set_where_filter(Some(where_filter));
 
         let raw_response = self.client.delete(&formatted_url)
             .header("Authorization", format!("Basic {}", ticket_b64))
-            .query(&params)
+            .query(&params_builder.build())
             .send()
             .await?;
 
@@ -222,23 +159,21 @@ impl AuditApi {
         Ok(parsed)
     }
 
-    pub async fn get_audit_entry(
-        &self,
-        ticket: &str,
-        audit_application_id: &str,
-        audit_entry_id: &str,
-        fields: Option<Vec<String>>,
-    ) -> Result<AuditEntryEntry, AlfError> {
+    pub async fn get_audit_entry(&self, ticket: &str, audit_application_id: &str, audit_entry_id: &str, fields: Option<&Vec<String>>) -> Result<AuditEntryEntry> {
         let formatted_url = format!("{}/audit-applications/{}/audit-entries/{}", self.base_url, audit_application_id, audit_entry_id);
         let ticket_b64 = general_purpose::STANDARD.encode(ticket);
 
-        let params = GetAuditEntryQueryParams {
-            fields,
-        };
+        let mut params_builder = QueryParamsBuilder::new();
+
+        if let Some(field_list) = fields {
+            for field in field_list {
+                params_builder.push_field(Some(field));
+            }
+        }
 
         let raw_response = self.client.get(&formatted_url)
             .header("Authorization", format!("Basic {}", ticket_b64))
-            .query(&params)
+            .query(&params_builder.build())
             .send()
             .await?;
 
@@ -247,12 +182,7 @@ impl AuditApi {
         Ok(parsed)
     }
 
-    pub async fn permanently_delete_audit_entry(
-        &self,
-        ticket: &str,
-        audit_application_id: &str,
-        audit_entry_id: &str,
-    ) -> Result<String, AlfError> {
+    pub async fn permanently_delete_audit_entry(&self, ticket: &str, audit_application_id: &str, audit_entry_id: &str) -> Result<String> {
         let formatted_url = format!("{}/audit-applications/{}/audit-entries/{}", self.base_url, audit_application_id, audit_entry_id);
         let ticket_b64 = general_purpose::STANDARD.encode(ticket);
 
@@ -262,7 +192,6 @@ impl AuditApi {
             .await?;
 
         let status_code = raw_response.status().as_u16();
-        let response_body_empty_unless_error = raw_response.text().await?;
 
         match status_code {
             204 => Ok("Successfully deleted audit entry".to_string()),
@@ -271,39 +200,41 @@ impl AuditApi {
             403 => Ok("Current user does not have permission to delete audit information".to_string()),
             404 => Ok("auditApplicationId or auditEntryId does not exist".to_string()),
             501 => Ok("Audit is disabled for the system".to_string()),
-            _ => {
-                let error: AlfError = serde_json::from_str(&response_body_empty_unless_error)?;
-                Err(error)
-            }
+            _ => Err(anyhow::Error::from(std::io::Error::new(std::io::ErrorKind::Other, "Something went wrong and I don't know what it is")))
         }
     }
 
-    pub async fn list_audit_entries_for_node(
-        &self,
-        ticket: &str,
-        node_id: &str,
-        skip_count: Option<u32>,
-        order_by: Option<Vec<String>>,
-        max_items: Option<u32>,
-        where_filter: Option<String>,
-        include: Option<Vec<String>>,
-        fields: Option<Vec<String>>,
-    ) -> Result<AuditEntryPaging, AlfError> {
+    pub async fn list_audit_entries_for_node(&self, ticket: &str, node_id: &str, skip_count: Option<&u32>, order_by: Option<&Vec<String>>, max_items: Option<&u32>, where_filter: Option<&String>, include: Option<&Vec<String>>, fields: Option<&Vec<String>>) -> Result<AuditEntryPaging> {
         let formatted_url = format!("{}/nodes/{}/audit-entries", self.base_url, node_id);
         let ticket_b64 = general_purpose::STANDARD.encode(ticket);
 
-        let params = ListAuditEntriesForNodeQueryParams {
-            skip_count:skip_count.unwrap_or(0),
-            order_by,
-            max_items: max_items.unwrap_or(100),
-            where_filter,
-            include,
-            fields,
-        };
+        let mut params_builder = QueryParamsBuilder::new()
+            .set_skip_count(skip_count)
+            .set_max_items(max_items)
+            .set_where_filter(where_filter);
+
+
+        if let Some(order_list) = order_by {
+            for order_value in order_list {
+                params_builder.push_order_by(Some(order_value));
+            }
+        }
+
+        if let Some(field_list) = fields {
+            for field in field_list {
+                params_builder.push_field(Some(field));
+            }
+        }
+
+        if let Some(include_list) = include {
+            for include_value in include_list {
+                params_builder.push_include(Some(include_value));
+            }
+        }
 
         let raw_response = self.client.get(&formatted_url)
             .header("Authorization", format!("Basic {}", ticket_b64))
-            .query(&params)
+            .query(&params_builder.build())
             .send()
             .await?;
 
